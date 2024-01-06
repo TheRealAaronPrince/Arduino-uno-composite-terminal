@@ -169,7 +169,7 @@ void showCursor(void) {
   }
   else
   {
-    *screen = 0x20;
+    *screen = temp;
   }
    cursorShown = true;
 }
