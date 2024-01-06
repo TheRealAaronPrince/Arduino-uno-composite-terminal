@@ -1,3 +1,11 @@
+Original project by Ceptimus.
+Modified by Aaron Prince.
+the un-modified original project and demonstration of original code can be found in this video
+https://www.youtube.com/watch?v=gG3mlhy88GE
+
+
+
+
 The only files you need are:
 
 UnoVideoSerial.ino (the main sketch)
