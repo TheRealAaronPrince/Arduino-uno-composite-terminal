@@ -17,8 +17,8 @@
 #define UNSUPPRESS CBI  DDRD, 5
 #define SUPPRESS   SBI  DDRD, 5
 
- .global pixelsEtc ; (*pScreenRam, *fontSlice, tcnt, minTCNT)
- ;                       R25  R24     R23 R22  R21 R20 R19 R18   
+ .global pixelsEtc ; (*pScreenRam,|*fontSlice,|  tcnt,  | minTCNT)
+ ;                      R25  R24  |  R23 R22  | R21 R20 | R19 R18   
 
 pixelsEtc:
 	; interrupt may jitter because of instructions taking 1, 2, 3 clock cycles
@@ -48,7 +48,7 @@ jitterFix4:
 	; interestingly, when the USART is put to sleep at the end of the row, then its output goes low.
 	; this is true even when the last pixel sent was high.
 	LDI R18, 0xFF ; for flipping bits RVS
-	SUPPRESS
+  SUPPRESS
 	LD R24, X+ ; get first character from screen ram
 	CPI R24, 0x80 ; test RVS bit set
 	IN R19, SREG ; save flags
@@ -63,7 +63,7 @@ notRvs:
 	STS UDR0, R20 ; send them to the USART
 	LDI R24, 0x08
 	STS UCSR0B, R24 ; enable USART transmit
-	UNSUPPRESS
+  UNSUPPRESS
 	LDI R25, BYTES_PER_RASTER-1 ; loop counter
 loop: ;                                          cycles
 	LD R24, X+ ; get character from screen ram // +2 =  2
